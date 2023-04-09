@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import Navbar from "./components/Navbar";
-import Planets from "./components/Planets";
-import People from "./components/People";
+import * as React from "react";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  const [page , setPage] = useState('planets');
+import ProjectOne from "./pages/projectOne";
+import ProjectTwo from "./pages/projectTwo";
+import Home from "./pages";
+import { CartProvider } from "./Context/CartContext";
+import { OrdersProvider } from "./Context/OrdersContext";
 
+export default function App() {
   return (
-    <div className="App">
-      <h1>Star Wars Info</h1>
-      <Navbar setPage={setPage}/>
-      <div className="content">
-        {page === 'planets' ? <Planets/> : <People/> }
-      </div>
-    </div>
+    <OrdersProvider>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="projectOne" element={<ProjectOne />} />
+          <Route path="projectTwo" element={<ProjectTwo />} />
+        </Routes>
+      </CartProvider>
+    </OrdersProvider>
   );
 }
-
-export default App;
