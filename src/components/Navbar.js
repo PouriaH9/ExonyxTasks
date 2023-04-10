@@ -5,8 +5,10 @@ import { FiShoppingCart, FiTrash2 } from "react-icons/fi";
 import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
 import { OrdersContext } from "../Context/OrdersContext";
+import { ProductCountContext } from "../Context/ProductCountContext";
 
 const Navbar = () => {
+
   const [showCart, setShowCart] = useState(false);
   const { cartCount } = useContext(CartContext);
   const orders = JSON.parse(localStorage.getItem("orders"));
@@ -17,14 +19,18 @@ const Navbar = () => {
   };
 
   const handleTrashClick = (title) => {
-    const updatedOrders = orders.map((order) => {
-      if (order.title === title) {
-        order.quantity = 0;
+    // setProductCount(0);
+
+    const updatedOrders = orders.filter((order) => {
+      if (order.title !== title || order.quantity === 0) {
+        return order;
       }
-      return order;
     });
-    localStorage.setItem("orders", JSON.stringify(updatedOrders));
-    setOrders(updatedOrders);
+    const deleted = orders.length !== updatedOrders.length;
+    if (deleted) {
+      localStorage.setItem("orders", JSON.stringify(updatedOrders));
+      setOrders(updatedOrders);
+    }
   };
 
   return (
@@ -112,7 +118,7 @@ const Navbar = () => {
                           {order.price}$
                         </p>
                         <FiTrash2
-                          onClick={handleTrashClick}
+                          onClick={() => handleTrashClick(order.title)}
                           className="text-2xl text-gray-400 mx-auto mt-5 bottom-0 cursor-pointer hover:text-red-500"
                         />
                       </div>

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Navbar from "./Navbar";
 import allProducts from "../data";
 import { CartContext } from "../Context/CartContext";
-import { useContext } from "react";
 import { OrdersContext } from "../Context/OrdersContext";
+
 
 function ProductList() {
   // State for the count of each product in the cart

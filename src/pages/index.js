@@ -31,11 +31,19 @@ function Home() {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="absolute mb-[700px] inset-0 flex items-center justify-center">
-          <div className="bg-gray-800 p-5 rounded-lg">
-            <h2 className="text-2xl font-bold text-gray-100 ">
-              Hello from Pouria!
+        <div class="absolute bottom-20 inset-x-0 flex items-center justify-center">
+          <div class="bg-gray-800 p-5 rounded-lg">
+            <h2 class="text-2xl font-bold text-gray-100 mb-4">
+              Hello from Pouria
             </h2>
+            <ul class="font-medium text-gray-300">
+              <li>React</li>
+              <li>Tailwind CSS</li>
+              <li>Axios</li>
+              <li>React Bootstrap</li>
+              <li>Toastify</li>
+              <li>React Icons</li>
+            </ul>
           </div>
         </div>
       </Transition>

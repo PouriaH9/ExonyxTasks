@@ -1,24 +1,37 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
+import allProducts from "../data";
 
 export const OrdersContext = createContext();
 
-export function OrdersProvider({ children }) {
+export const OrdersProvider = (props) => {
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem("orders"));
-    if (savedOrders) {
-      setOrders(savedOrders);
-    }
-  }, []);
+  const addOrder = (productId) => {
+    const existingOrderIndex = orders.findIndex((order) => order.id === productId);
 
-  useEffect(() => {
-    localStorage.setItem("orders", JSON.stringify(orders));
-  }, [orders]);
+    if (existingOrderIndex !== -1) {
+      const updatedOrders = [...orders];
+      updatedOrders[existingOrderIndex].quantity += 1;
+      setOrders(updatedOrders);
+    } else {
+      const product = allProducts.find((p) => p.id === productId);
+      const order = { ...product, quantity: 1 };
+      setOrders((prevOrders) => [...prevOrders, order]);
+    }
+  };
+
+  const removeOrder = (productId) => {
+    const orderIndex = orders.findIndex((order) => order.id === productId);
+    if (orderIndex !== -1) {
+      const updatedOrders = [...orders];
+      updatedOrders.splice(orderIndex, 1);
+      setOrders(updatedOrders);
+    }
+  };
 
   return (
-    <OrdersContext.Provider value={{ orders, setOrders }}>
-      {children}
+    <OrdersContext.Provider value={{ orders, setOrders, addOrder, removeOrder }}>
+      {props.children}
     </OrdersContext.Provider>
   );
-}
+};
