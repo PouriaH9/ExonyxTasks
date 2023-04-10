@@ -7,7 +7,9 @@ export const OrdersProvider = (props) => {
   const [orders, setOrders] = useState([]);
 
   const addOrder = (productId) => {
-    const existingOrderIndex = orders.findIndex((order) => order.id === productId);
+    const existingOrderIndex = orders.findIndex(
+      (order) => order.id === productId
+    );
 
     if (existingOrderIndex !== -1) {
       const updatedOrders = [...orders];
@@ -30,7 +32,9 @@ export const OrdersProvider = (props) => {
   };
 
   return (
-    <OrdersContext.Provider value={{ orders, setOrders, addOrder, removeOrder }}>
+    <OrdersContext.Provider
+      value={{ orders, setOrders, addOrder, removeOrder }}
+    >
       {props.children}
     </OrdersContext.Provider>
   );
